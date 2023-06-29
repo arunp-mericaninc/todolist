@@ -4,8 +4,8 @@ import { getAuth, signInWithEmailAndPassword } from "firebase/auth";
 import { collection, doc, getDocs, getFirestore } from "firebase/firestore";
 import { useRouter } from "next/navigation";
 import React, { useEffect, useState } from "react";
-import { ToastContainer, toast } from 'react-toastify';
-// import { Toast } from "react-toastify/dist/components";
+import Swal from "sweetalert2";
+
 // import SignUp from '../SignIn/SignUp';
 
 const Login = () => {
@@ -44,15 +44,24 @@ const Login = () => {
   .then((userCredential) => {
     // Signed in 
     const user = userCredential.user;
-    toast.success("Login Success")
+    Swal.fire(
+      "Good!",
+      "Log in Success!",
+      "success",
+    )
     router.push("/profile")
     console.log(user);
     // ...
   })
   .catch((error) => {
-    toast.error("Enter Proper Value")
+    
     const errorCode = error.code;
     const errorMessage = error.message;
+    Swal.fire(
+      "Good!",
+      errorMessage,
+      "warning",
+    )
   });
   }
   return (
@@ -118,7 +127,6 @@ const Login = () => {
           </div>
         </div>
       </div>
-      <ToastContainer/>
     </section>
   );
 };

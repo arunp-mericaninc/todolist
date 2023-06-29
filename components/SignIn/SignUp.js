@@ -2,7 +2,7 @@
 import React, { useState, useEffect } from "react";
 import { useRouter } from "next/navigation";
 import { getAuth, createUserWithEmailAndPassword } from "firebase/auth"
-import { ToastContainer, toast } from 'react-toastify';
+import Swal from "sweetalert2";
 import { app } from "@/utils/firebase";
 
 const SignUp = () => {
@@ -24,8 +24,13 @@ const handleSubmit=(e)=>{
           // Signed in
           const user = userCredential.user;
           console.log(user);
-          toast.success("User created Successfully")
           router.push("/form")
+          Swal.fire(
+            'Good job!',
+            'Login Success!',
+            'success'
+          )
+          
           
           // ...
         })
@@ -36,6 +41,11 @@ const handleSubmit=(e)=>{
         });
     } else {
     console.log("password mismatch");
+    Swal.fire(
+      'Oops!',
+      'Password Mismatch!',
+      'error'
+    )
   }
 }
 
@@ -118,7 +128,6 @@ const handleSubmit=(e)=>{
           </p>
         </form>
       </div>
-      <ToastContainer/>
     </section>
   );
 };

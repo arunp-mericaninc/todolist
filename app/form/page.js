@@ -4,6 +4,7 @@ import { doc, getFirestore, setDoc } from "firebase/firestore";
 import { getDownloadURL, getStorage, ref, uploadBytes } from "firebase/storage";
 import { app } from '@/utils/firebase';
 import { useRouter } from 'next/navigation';
+import Swal from 'sweetalert2';
 
 
 const Form = () => {
@@ -46,6 +47,11 @@ const Form = () => {
 
   const savePost=async()=>{
     await setDoc(doc(db, "post", Date.now().toString()), inputs);
+    Swal.fire(
+      "Good Job",
+      "User Details Updated",
+      "success",
+    )
   router.push("/")
   };
   return (
