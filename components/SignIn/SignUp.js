@@ -7,12 +7,21 @@ import { app } from "@/utils/firebase";
 
 const SignUp = () => {
   const [inputs, setInputs]= useState([]);
+  const [file, setFile] = useState();
+  const [submit, setSubmit] = useState(false);
   const [email, setEmail] = useState("")
   const [password, setPassword] = useState("")
   const router = useRouter();
   const db = getFirestore(app);
   const auth = getAuth(app);
- 
+
+  useEffect(()=>{
+    if(submit==true)
+    {
+        savePost();
+    }
+
+  },[submit])
   const handleChange = (e)=>{
     const name = e.target.name;
     const value = e.target.value;
@@ -23,6 +32,21 @@ const SignUp = () => {
       e.preventDefault();
     }
     console.log(inputs);
+    const storageRef = ref(storage, 'todolist/'+file?.name);
+    uploadBytes(storageRef, file).then((snapshot) => {
+        console.log('Uploaded a blob or file!');
+      }).then(resp=>{
+        getDownloadURL(storageRef).then(async(url)=>{
+            
+            setInputs((values)=>({...values,
+                image:url}));          
+            setSubmit(true);
+
+        }) 
+      }) ;
+  };
+
+  const savePost=async()=>{
     await setDoc(doc(db, "post", Date.now().toString()), inputs);
     createUserWithEmailAndPassword(auth, email, password)
       .then((userCredential) => {
