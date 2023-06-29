@@ -2,7 +2,7 @@
 import React, { useState, useEffect } from "react";
 import { useRouter } from "next/navigation";
 import { getAuth, createUserWithEmailAndPassword } from "firebase/auth"
-
+import { ToastContainer, toast } from 'react-toastify';
 import { app } from "@/utils/firebase";
 
 const SignUp = () => {
@@ -16,14 +16,17 @@ const SignUp = () => {
   const auth = getAuth(app);
   
 
-const handleSubmit=()=>{
+const handleSubmit=(e)=>{
+  e.preventDefault();
   if (password === confirmPassword) {
       createUserWithEmailAndPassword(auth, email, password)
         .then((userCredential) => {
           // Signed in
           const user = userCredential.user;
           console.log(user);
+          toast.success("User created Successfully")
           router.push("/form")
+          
           // ...
         })
         .catch((error) => {
@@ -115,6 +118,7 @@ const handleSubmit=()=>{
           </p>
         </form>
       </div>
+      <ToastContainer/>
     </section>
   );
 };
