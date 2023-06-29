@@ -1,7 +1,7 @@
 "use client";
 import React, { useState, useEffect } from "react";
 import { useRouter } from "next/navigation";
-import { getAuth, createUserWithEmailAndPassword } from "firebase/auth"
+// import { getAuth, createUserWithEmailAndPassword } from "firebase/auth"
 import { doc, getFirestore, setDoc } from "firebase/firestore";
 import { getDownloadURL, getStorage, ref, uploadBytes } from "firebase/storage";
 import { app } from "@/utils/firebase";
@@ -14,7 +14,7 @@ const SignUp = () => {
   // const [password, setPassword] = useState("")
   const router = useRouter();
   const db = getFirestore(app);
-  const auth = getAuth(app);
+  // const auth = getAuth(app);
   const storage = getStorage(app);
 
   useEffect(()=>{
@@ -50,19 +50,19 @@ const SignUp = () => {
 
   const savePost=async()=>{
     await setDoc(doc(db, "post", Date.now().toString()), inputs);
-    createUserWithEmailAndPassword(auth, email, password)
-      .then((userCredential) => {
-        // Signed in
-        const user = userCredential.user;
-        console.log(user);
-        router.push("/")
-        // ...
-      })
-      .catch((error) => {
-        const errorCode = error.code;
-        const errorMessage = error.message;
-        // ..
-      });
+    // createUserWithEmailAndPassword(auth, email, password)
+    //   .then((userCredential) => {
+    //     // Signed in
+    //     const user = userCredential.user;
+    //     console.log(user);
+    //     router.push("/")
+    //     // ...
+    //   })
+    //   .catch((error) => {
+    //     const errorCode = error.code;
+    //     const errorMessage = error.message;
+    //     // ..
+    //   });
   };
 
 
