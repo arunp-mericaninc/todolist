@@ -11,7 +11,7 @@ const Login = () => {
   const [email, setEmail] = useState("")
   const [password, setPassword] = useState("")
   const [val, setVal] = useState([])
-  const auth = getAuth(app);
+  // const auth = getAuth(app);
   const db = getFirestore(app)
   const value = collection(db, "post")
 
@@ -36,18 +36,18 @@ const Login = () => {
           router.push("/")
         }
       })
-    signInWithEmailAndPassword(auth, email, password)
-  .then((userCredential) => {
-    // Signed in 
-    const user = userCredential.user;
-    router.push("/profile")
-    console.log(user);
-    // ...
-  })
-  .catch((error) => {
-    const errorCode = error.code;
-    const errorMessage = error.message;
-  });
+  //   signInWithEmailAndPassword(auth, email, password)
+  // .then((userCredential) => {
+  //   // Signed in 
+  //   const user = userCredential.user;
+  //   router.push("/profile")
+  //   console.log(user);
+  //   // ...
+  // })
+  // .catch((error) => {
+  //   const errorCode = error.code;
+  //   const errorMessage = error.message;
+  // });
   }
   return (
     <section className="bg-gray-50 dark:bg-gray-900">
