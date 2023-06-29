@@ -1,19 +1,21 @@
 "use client";
-import React, { useState } from "react";
+import React, { useState, useEffect } from "react";
 import { useRouter } from "next/navigation";
 import { getAuth, createUserWithEmailAndPassword } from "firebase/auth"
 import { doc, getFirestore, setDoc } from "firebase/firestore";
+import { getDownloadURL, getStorage, ref, uploadBytes } from "firebase/storage";
 import { app } from "@/utils/firebase";
 
 const SignUp = () => {
   const [inputs, setInputs]= useState([]);
   const [file, setFile] = useState();
   const [submit, setSubmit] = useState(false);
-  const [email, setEmail] = useState("")
-  const [password, setPassword] = useState("")
+  // const [email, setEmail] = useState("")
+  // const [password, setPassword] = useState("")
   const router = useRouter();
   const db = getFirestore(app);
   const auth = getAuth(app);
+  const storage = getStorage(app);
 
   useEffect(()=>{
     if(submit==true)
@@ -154,7 +156,8 @@ const SignUp = () => {
               type="email"
               name="email"
               id="email"
-              onChange={(e)=>setEmail(e.target.value)}
+              // onChange={(e)=>setEmail(e.target.value)}
+              onChange={handleChange}
               className="bg-gray-50 border border-gray-300 text-gray-900 sm:text-sm rounded-lg focus:ring-primary-600 focus:border-primary-600 block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500"
               placeholder="name@company.com"
               required
@@ -171,7 +174,8 @@ const SignUp = () => {
               type="password"
               name="password"
               id="password"
-              onChange={(e)=>setPassword(e.target.value)}
+              // onChange={(e)=>setPassword(e.target.value)}
+              onChange={handleChange}
               placeholder="••••••••"
               className="bg-gray-50 border border-gray-300 text-gray-900 sm:text-sm rounded-lg focus:ring-primary-600 focus:border-primary-600 block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500"
               required
@@ -194,6 +198,7 @@ const SignUp = () => {
               required
             />
           </div>
+          <input type="file" onChange={(e)=>setFile(e.target.files[0])} className="block mb-2 text-sm font-medium text-gray-900 dark:text-white"/>
           <button
           onClick={handleSubmit}
             type="submit"

@@ -1,12 +1,16 @@
 'use client'
 import React from 'react'
 import { app } from '@/utils/firebase'
+import { getAuth, signOut } from "firebase/auth";
 import { getFirestore, collection, getDocs } from "firebase/firestore";
 import { useEffect, useState } from 'react';
 import Image from 'next/image';
+import { useRouter } from 'next/navigation';
 
 const Profile = () => {
+  const router = useRouter()
   const db=getFirestore(app);
+  const auth = getAuth(app);
   const [post, setPost] = useState([])
   useEffect(()=>{
     getPost();
@@ -17,6 +21,14 @@ querySnapshot.forEach((doc) => {
   setPost(post =>[...post,doc.data()])
   // console.log(`${doc.id} => ${doc.data()}`);
 });
+  }
+  const handleLogout=()=>{
+// signOut(auth).then(() => {
+  router.push("/")
+  // Sign-out successful.
+// }).catch((error) => {
+//   // An error happened.
+// });
   }
   return (
     <div className='flex items-center justify-center'>
@@ -44,12 +56,13 @@ querySnapshot.forEach((doc) => {
         </div>
     </div>
     <div class="flex flex-col items-center pb-10">
-        <img class="w-24 h-24 mb-3 rounded-full shadow-lg" src="/docs/images/people/profile-picture-3.jpg" alt="Bonnie image"/>
+      <Image src={item.image} alt={item.username} width={70} height={50} className='w-24 h-24 mb-3 rounded-full shadow-lg'/>
+        {/* <img class="w-24 h-24 mb-3 rounded-full shadow-lg" src="/docs/images/people/profile-picture-3.jpg" alt="Bonnie image"/> */}
         <h5 class="mb-1 text-xl font-medium text-gray-900 dark:text-white">{item.username}</h5>
         <span class="text-sm text-gray-500 dark:text-gray-400">{item.phoneno}</span>
         <div class="flex mt-4 space-x-3 md:mt-6">
             <button  class="inline-flex items-center px-4 py-2 text-sm font-medium text-center text-white bg-blue-700 rounded-lg hover:bg-blue-800 focus:ring-4 focus:outline-none focus:ring-blue-300 dark:bg-blue-600 dark:hover:bg-blue-700 dark:focus:ring-blue-800">Add Task</button>
-            <button class="inline-flex items-center px-4 py-2 text-sm font-medium text-center text-gray-900 bg-white border border-gray-300 rounded-lg hover:bg-gray-100 focus:ring-4 focus:outline-none focus:ring-gray-200 dark:bg-gray-800 dark:text-white dark:border-gray-600 dark:hover:bg-gray-700 dark:hover:border-gray-700 dark:focus:ring-gray-700">Logout</button>
+            <button onClick={()=>handleLogout()} class="inline-flex items-center px-4 py-2 text-sm font-medium text-center text-gray-900 bg-white border border-gray-300 rounded-lg hover:bg-gray-100 focus:ring-4 focus:outline-none focus:ring-gray-200 dark:bg-gray-800 dark:text-white dark:border-gray-600 dark:hover:bg-gray-700 dark:hover:border-gray-700 dark:focus:ring-gray-700">Logout</button>
         </div>
     </div>
 </div>
