@@ -30,7 +30,9 @@ const Login = () => {
       }
       val.forEach((value)=>{
         if (value.email===email && value.password === password) {
-          router.push("/profile")
+          router.replace("/profile")
+          console.log(value);
+          console.log("login success");
 
         } else {
           router.push("/")
