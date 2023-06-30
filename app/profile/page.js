@@ -28,14 +28,7 @@ const Profile = () => {
     };
     getData()
   },[])
-  useEffect(()=>{
-    const getData = async()=>{
-      const dbVal = await getDocs(collection(db, "todo"));
-      setTask(dbVal.docs.map((doc)=>({...doc.data(), id: doc.id})))
-      console.log(task);
-    };
-    getData()
-  },[])
+ 
 
 
   // useEffect(() => {
@@ -53,18 +46,11 @@ const Profile = () => {
   //     })
   // };
 
-  const handleLogout = () => {
-    // signOut(auth).then(() => {
-    router.push("/");
-    // Sign-out successful.
-    // }).catch((error) => {
-    //   // An error happened.
-    // });
-  };
+  
   return (
     <div className="flex items-center justify-center">
-      <div><Home /></div>
-      <div className="flex flex-col items-center justify-center">
+      <div><Home post={post} task={task} /></div>
+      {/* <div className="flex flex-col items-center justify-center">
       <div className="flex items-center justify-center">
         {post.map((item, index) => {
         return (
@@ -131,7 +117,7 @@ const Profile = () => {
                 className="w-24 h-24 mb-3 rounded-full shadow-lg"
               />
               {/* <img className="w-24 h-24 mb-3 rounded-full shadow-lg" src="/docs/images/people/profile-picture-3.jpg" alt="Bonnie image"/> */}
-              <h5 className="mb-1 text-xl font-medium text-gray-900 dark:text-white">
+              {/* <h5 className="mb-1 text-xl font-medium text-gray-900 dark:text-white">
                 {item.username}
               </h5>
               <span className="text-sm text-gray-500 dark:text-gray-400">
@@ -152,8 +138,8 @@ const Profile = () => {
           </div>
         );
       })}</div>
-      <div ><Task task={task} className="flex flex-row"/></div>
-      </div>
+      
+      </div> */} 
     </div>
   );
 };

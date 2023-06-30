@@ -37,6 +37,11 @@ const handleSubmit=(e)=>{
         .catch((error) => {
           const errorCode = error.code;
           const errorMessage = error.message;
+          Swal.fire(
+            'Oops!',
+            errorMessage,
+            'error'
+          )
           // ..
         });
     } else {
