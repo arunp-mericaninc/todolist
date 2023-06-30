@@ -1,45 +1,30 @@
 "use client";
+import { userContext } from "@/Context/UserContext";
 import { app } from "@/utils/firebase";
 import { getAuth, signInWithEmailAndPassword } from "firebase/auth";
 import { collection, doc, getDocs, getFirestore } from "firebase/firestore";
 import { useRouter } from "next/navigation";
-import React, { useEffect, useState } from "react";
+import React, { useContext, useEffect, useState } from "react";
 import Swal from "sweetalert2";
 
 // import SignUp from '../SignIn/SignUp';
 
 const Login = () => {
   const router = useRouter();
-  const [email, setEmail] = useState("")
+  const {email, setEmail} = useContext(userContext)
   const [password, setPassword] = useState("")
-  // const [val, setVal] = useState([])
+  
   const auth = getAuth(app);
   const db = getFirestore(app)
-  // const value = collection(db, "post")
+  
 
-  // useEffect(()=>{
-  //   const getData = async()=>{
-  //     const dbVal = await getDocs(value);
-  //     setVal(dbVal.docs.map((doc)=>({...doc.data(), id: doc.id})))
-  //     console.log(val);
-  //   };
-  //   getData()
-  // },[])
+ 
 
   const handleSubmit=(e)=>{
     // if (e && e.preventDefault) {
         e.preventDefault();
       // }
-      // val.forEach((value)=>{
-      //   if (value.email===email && value.password === password) {
-      //     router.push("/profile")
-      //     console.log(value);
-      //     console.log("login success");
-
-      //   } else {
-      //     router.push("/")
-      //   }
-      // })
+  
     signInWithEmailAndPassword(auth, email, password)
   .then((userCredential) => {
     // Signed in 

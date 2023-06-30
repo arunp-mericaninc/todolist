@@ -1,5 +1,5 @@
 "use client";
-import React from "react";
+import React, { useContext } from "react";
 import { app } from "@/utils/firebase";
 import { getAuth, signOut } from "firebase/auth";
 import { getFirestore, collection, getDocs } from "firebase/firestore";
@@ -7,22 +7,52 @@ import { useEffect, useState } from "react";
 import Image from "next/image";
 import { useRouter } from "next/navigation";
 import Home from "@/components/Home/Home";
+import { userContext } from "@/Context/UserContext";
+import Task from "@/components/Task/Task";
 
 const Profile = () => {
+  const {email, password} = useContext(userContext)
   const router = useRouter();
   const db = getFirestore(app);
   const auth = getAuth(app);
   const [post, setPost] = useState([]);
-  useEffect(() => {
-    getPost();
-  }, []);
-  const getPost = async () => {
-    const querySnapshot = await getDocs(collection(db, "post"));
-    querySnapshot.forEach((doc) => {
-      setPost((post) => [...post, doc.data()]);
-      // console.log(`${doc.id} => ${doc.data()}`);
-    });
-  };
+  const [task, setTask] = useState([]);
+  const [val, setVal] = useState([])
+  const value = collection(db, "post")
+
+  useEffect(()=>{
+    const getData = async()=>{
+      const dbVal = await getDocs(value);
+      setPost(dbVal.docs.map((doc)=>({...doc.data(), id: doc.id})))
+      console.log(val);
+    };
+    getData()
+  },[])
+  useEffect(()=>{
+    const getData = async()=>{
+      const dbVal = await getDocs(collection(db, "todo"));
+      setTask(dbVal.docs.map((doc)=>({...doc.data(), id: doc.id})))
+      console.log(task);
+    };
+    getData()
+  },[])
+
+
+  // useEffect(() => {
+  //   getPost();
+  // }, []);
+  // const getPost = async () => {
+  //       val.forEach((value)=>{
+  //       if (value.email===email && value.password === password){
+  //         console.log(value);
+  //         setPost(value)
+  //         console.log(setPost);
+  //       } else {
+  //         router.push("/")
+  //       }
+  //     })
+  // };
+
   const handleLogout = () => {
     // signOut(auth).then(() => {
     router.push("/");
@@ -33,8 +63,10 @@ const Profile = () => {
   };
   return (
     <div className="flex items-center justify-center">
-      <Home />
-      {post.map((item, index) => {
+      <div><Home /></div>
+      <div className="flex flex-col items-center justify-center">
+      <div className="flex items-center justify-center">
+        {post.map((item, index) => {
         return (
           <div
             key={index}
@@ -106,7 +138,7 @@ const Profile = () => {
                 {item.phoneno}
               </span>
               <div className="flex mt-4 space-x-3 md:mt-6">
-                <button className="inline-flex items-center px-4 py-2 text-sm font-medium text-center text-white bg-blue-700 rounded-lg hover:bg-blue-800 focus:ring-4 focus:outline-none focus:ring-blue-300 dark:bg-blue-600 dark:hover:bg-blue-700 dark:focus:ring-blue-800">
+                <button onClick={()=>router.push('/profile/task')} className="inline-flex items-center px-4 py-2 text-sm font-medium text-center text-white bg-blue-700 rounded-lg hover:bg-blue-800 focus:ring-4 focus:outline-none focus:ring-blue-300 dark:bg-blue-600 dark:hover:bg-blue-700 dark:focus:ring-blue-800">
                   Add Task
                 </button>
                 <button
@@ -119,7 +151,9 @@ const Profile = () => {
             </div>
           </div>
         );
-      })}
+      })}</div>
+      <div ><Task task={task} className="flex flex-row"/></div>
+      </div>
     </div>
   );
 };
