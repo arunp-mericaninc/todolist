@@ -13,7 +13,7 @@ const Login = () => {
   const router = useRouter();
   const {email, setEmail} = useContext(userContext)
   const [password, setPassword] = useState("")
-  
+  console.log(email);
   const auth = getAuth(app);
   const db = getFirestore(app)
   
