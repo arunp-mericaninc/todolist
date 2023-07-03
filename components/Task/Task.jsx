@@ -13,13 +13,13 @@ const Task = () => {
     const [show, setShow] = useState(false)
     const[task, setTask] = useState([])
     useEffect(()=>{
-        const getData = async()=>{
-          const dbVal = await getDocs(collection(db, "todo"));
-          setTask(dbVal.docs.map((doc)=>({...doc.data(), id: doc.id})))
-          console.log(task);
-        };
         getData()
-      },[task])
+      },[])
+      const getData = async()=>{
+        const dbVal = await getDocs(collection(db, "todo"));
+        setTask(dbVal.docs.map((doc)=>({...doc.data(), id: doc.id})))
+        console.log(task);
+      };
       const handleEdit=(id, titles, desc)=>{
         setTitle(titles)
         setDescription(desc)
@@ -85,7 +85,7 @@ const Task = () => {
             onClick={handleSubmit} 
             className="inline-flex items-center px-5 py-2.5 mt-4 sm:mt-6 text-sm font-medium text-center text-black bg-blue-500 rounded-lg focus:ring-4 focus:ring-primary-200 dark:focus:ring-primary-900 hover:bg-primary-800"
           >
-            Submit
+            Update
           </button>
         </form>
       </div>

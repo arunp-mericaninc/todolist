@@ -11,7 +11,7 @@ import Swal from "sweetalert2";
 
 const Login = () => {
   const router = useRouter();
-  const {email, setEmail} = useContext(userContext)
+  const [email, setEmail] = useState("")
   const [password, setPassword] = useState("")
   console.log(email);
   const auth = getAuth(app);

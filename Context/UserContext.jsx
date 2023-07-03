@@ -1,16 +1,28 @@
 'use client'
-import { createContext, useState } from "react";
+import { app } from "@/utils/firebase";
+import { createContext, useEffect, useState } from "react";
+import { getAuth, onAuthStateChanged } from "firebase/auth";
 
 
 export const userContext = createContext(null);
 
 export const UserContextProvider = ({children}) =>{
-    const [email, setEmail] = useState("");
-    const [isAuth, setIsAuth] = useState(false)
-    const [password, setPassword] = useState("");
+    const auth = getAuth(app);
+    const [user, setUser] = useState({});
+    useEffect(() => {
+        const unsubscribe = onAuthStateChanged(auth, (currentuser) => {
+          // console.log("Auth", currentuser);
+    
+          setUser(currentuser);
+        });
+    
+        return () => {
+          unsubscribe();
+        };
+      }, []);
 
     const value = {
-        email, setEmail, password, setPassword, isAuth, setIsAuth
+        user
     }
 
     return(

@@ -1,10 +1,59 @@
-import React from "react";
+import React, { useContext, useEffect, useState } from "react";
 import Image from "next/image";
 import { useRouter } from "next/navigation";
 import Task from "../Task/Task";
+import { userContext } from "@/Context/UserContext";
+import { collection, getDocs, getFirestore, query, where } from "firebase/firestore";
+import { app } from "@/utils/firebase";
 
-const Home = ({ post, task }) => {
+const Home = ({ post }) => {
+  const [ val, setVal] = useState([])
+  const [userPost, setUserPost] = useState([]);
+  const {user} = useContext(userContext)
   const router = useRouter();
+  const db = getFirestore(app);
+
+  console.log(user.email);
+  console.log(post);
+  console.log(val);
+
+
+  // useEffect(()=>{
+  //   getPost()
+  // },[user])
+
+  // const getPost=()=>{
+  //   post.forEach((value)=> {
+  //     console.log(value.email);
+  //     if (value.email === user.email) {
+  //       console.log("email match");
+  //       setVal(value)
+  //     }else{
+  //       console.log("mail mismatch");
+  //     }
+      
+  //   });
+  // }
+  useEffect(() => {
+    getUserPost();
+  }, [user]);
+
+  const getUserPost = async () => {
+    setUserPost([]);
+    if (user.email) {
+      const q = query(
+        collection(db, "post"),
+        where("email", "==", user.email)
+      );
+      const querySnapshot = await getDocs(q);
+      querySnapshot.forEach((doc) => {
+        let data = doc.data();
+        data.id = doc.id;
+        setVal((userPost) => [...userPost, data]);
+      });
+    }
+  }
+  
   const handleLogout = () => {
     // signOut(auth).then(() => {
     router.push("/");
@@ -172,7 +221,7 @@ const Home = ({ post, task }) => {
       </div> */}
       <div>
         <div>
-          {post.map((item, index) => {
+          {val.map((item, index) => {
             return (
               <div
                 key={index}

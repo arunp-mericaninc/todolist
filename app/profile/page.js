@@ -2,7 +2,7 @@
 import React, { useContext } from "react";
 import { app } from "@/utils/firebase";
 import { getAuth, signOut } from "firebase/auth";
-import { getFirestore, collection, getDocs } from "firebase/firestore";
+import { getFirestore, collection, getDocs, query, where } from "firebase/firestore";
 import { useEffect, useState } from "react";
 import Image from "next/image";
 import { useRouter } from "next/navigation";
@@ -11,45 +11,47 @@ import { userContext } from "@/Context/UserContext";
 import Task from "@/components/Task/Task";
 
 const Profile = () => {
-  const {email, password} = useContext(userContext)
+  const {user} = useContext(userContext)
   const router = useRouter();
   const db = getFirestore(app);
   const auth = getAuth(app);
+  const [userPost, setUserPost] = useState([]);
   const [post, setPost] = useState([]);
-  const [task, setTask] = useState([]);
   const [val, setVal] = useState([])
   const value = collection(db, "post")
 
+  console.log(user.email);
   useEffect(()=>{
     const getData = async()=>{
       const dbVal = await getDocs(value);
       setPost(dbVal.docs.map((doc)=>({...doc.data(), id: doc.id})))
-      console.log(val);
     };
     getData()
-  },[])
+  },[user])
  
-
-
   // useEffect(() => {
-  //   getPost();
-  // }, []);
-  // const getPost = async () => {
-  //       val.forEach((value)=>{
-  //       if (value.email===email && value.password === password){
-  //         console.log(value);
-  //         setPost(value)
-  //         console.log(setPost);
-  //       } else {
-  //         router.push("/")
-  //       }
-  //     })
-  // };
+  //   getUserPost();
+  // }, [user]);
 
+  // const getUserPost = async () => {
+  //   setUserPost([]);
+  //   if (user.email) {
+  //     const q = query(
+  //       collection(db, "post"),
+  //       where("email", "==", user.email)
+  //     );
+  //     const querySnapshot = await getDocs(q);
+  //     querySnapshot.forEach((doc) => {
+  //       let data = doc.data();
+  //       data.id = doc.id;
+  //       setPost((userPost) => [...userPost, data]);
+  //     });
+  //   }
+  
   
   return (
     <div className="flex items-center justify-center">
-      <div><Home post={post} task={task} /></div>
+      <div><Home post={post}  /></div>
       {/* <div className="flex flex-col items-center justify-center">
       <div className="flex items-center justify-center">
         {post.map((item, index) => {
@@ -142,6 +144,6 @@ const Profile = () => {
       </div> */} 
     </div>
   );
-};
+}
 
 export default Profile;
