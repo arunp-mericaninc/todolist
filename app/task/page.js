@@ -6,6 +6,7 @@ import React, { useEffect, useState } from "react";
 import { doc, getFirestore, setDoc } from "firebase/firestore";
 import { getDownloadURL, getStorage, ref, uploadBytes } from "firebase/storage";
 import { useRouter } from "next/navigation";
+import withAuth from "@/components/Producted/ProductedRoute";
 
 const CreatePost = () => {
     const router = useRouter()
@@ -109,4 +110,4 @@ const CreatePost = () => {
   );
 };
 
-export default CreatePost;
+export default withAuth (CreatePost);

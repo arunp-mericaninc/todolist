@@ -123,4 +123,4 @@ const Task = () => {
   );
 };
 
-export default withAuth (Task);
+export default (Task);
