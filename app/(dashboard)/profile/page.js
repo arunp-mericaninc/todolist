@@ -75,7 +75,7 @@ const Profile = () => {
         <SideBar/>
       <div class="ml-[14%] sm:ml-64">
         <div>
-          {User?
+          
           <div className="flex items-center justify-center h-screen">
             {val.map((item, index) => {
               return (
@@ -135,7 +135,7 @@ const Profile = () => {
                 </div>
               );
             })}
-          </div>:router.push("/")}
+          </div>
           <div className="flex flex-wrap">
           <Task/>
         </div>
