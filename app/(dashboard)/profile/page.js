@@ -2,7 +2,7 @@
 import React, { useContext, useEffect, useState } from "react";
 import Image from "next/image";
 import { useRouter } from "next/navigation";
-import { userContext } from "@/Context/UserContext";
+import { UserContext } from "@/Context/UserContext";
 import {
   collection,
   getDocs,
@@ -21,7 +21,7 @@ const page = () => {
   const auth = getAuth(app);
   const [post, setPost] = useState([]);
   const [userPost, setUserPost] = useState([]);
-  const { user } = useContext(userContext);
+  const { user } = useContext(UserContext);
   const router = useRouter();
   const db = getFirestore(app);
 
