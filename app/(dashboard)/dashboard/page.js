@@ -1,6 +1,7 @@
 'use client'
 import { UserContext } from '@/Context/UserContext'
 import SideBar from '@/components/Home/SideBar'
+import withAuth from '@/components/Producted/ProductedRoute'
 import Task from '@/components/Task/Task'
 import { useRouter } from 'next/navigation'
 import React, { useContext } from 'react'
@@ -16,4 +17,4 @@ const Dashboard = () => {
   )
 }
 
-export default Dashboard
+export default withAuth (Dashboard)

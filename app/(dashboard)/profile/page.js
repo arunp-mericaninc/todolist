@@ -15,6 +15,7 @@ import Link from 'next/link'
 import { getAuth, signOut } from "firebase/auth";
 import Task from "@/components/Task/Task";
 import SideBar from "@/components/Home/SideBar";
+import withAuth from "@/components/Producted/ProductedRoute";
 
 const Profile = () => {
   const [val, setVal] = useState([]);
@@ -39,13 +40,15 @@ const Profile = () => {
   }, [User]);
 
   useEffect(() => {
-    getUserPost();
+    if (User!==null) {
+      getUserPost();
+    }
   }, [User]);
 
   const getUserPost = async () => {
     setUserPost([]);
     if (User.email) {
-      const q = query(collection(db, "post"), where("email", "==", user.email));
+      const q = query(collection(db, "post"), where("email", "==", User.email));
       const querySnapshot = await getDocs(q);
       querySnapshot.forEach((doc) => {
         let data = doc.data();
@@ -55,9 +58,10 @@ const Profile = () => {
     }
   };
   const handleLogout = () => {
-    router.push("/")
+    
     signOut(auth)
       .then(() => {
+        router.push("/")
         
         // Sign-out successful.
       })
@@ -141,4 +145,4 @@ const Profile = () => {
   );
 };
 
-export default Profile;
+export default withAuth (Profile);
