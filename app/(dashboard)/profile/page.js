@@ -16,7 +16,7 @@ import { getAuth, signOut } from "firebase/auth";
 import Task from "@/components/Task/Task";
 import SideBar from "@/components/Home/SideBar";
 
-const page = () => {
+const Profile = () => {
   const [val, setVal] = useState([]);
   const auth = getAuth(app);
   const [post, setPost] = useState([]);
@@ -141,4 +141,4 @@ const page = () => {
   );
 };
 
-export default page;
+export default Profile;

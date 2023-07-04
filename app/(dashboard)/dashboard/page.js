@@ -5,7 +5,7 @@ import Task from '@/components/Task/Task'
 import { useRouter } from 'next/navigation'
 import React, { useContext } from 'react'
 
-const page = () => {
+const Dashboard = () => {
   const {User}= useContext(UserContext)
   const router = useRouter()
   return (
@@ -16,4 +16,4 @@ const page = () => {
   )
 }
 
-export default page
+export default Dashboard
