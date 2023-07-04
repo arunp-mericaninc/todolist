@@ -1,9 +1,12 @@
 import React from 'react'
 import Link from 'next/link'
 import { useRouter } from 'next/navigation';
+import { getAuth, signOut } from 'firebase/auth';
+import { app } from '@/utils/firebase';
 
 const SideBar = () => {
   const router= useRouter()
+  const auth = getAuth(app)
   const handleLogout = () => {
     
     signOut(auth)
