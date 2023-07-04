@@ -1,3 +1,4 @@
+'use client'
 import React, { useEffect, useState } from "react";
 import { LuEdit } from "react-icons/lu";
 import { TiDeleteOutline } from "react-icons/ti";
@@ -14,11 +15,10 @@ const Task = () => {
     const[task, setTask] = useState([])
     useEffect(()=>{
         getData()
-      },[])
+      },[task])
       const getData = async()=>{
         const dbVal = await getDocs(collection(db, "todo"));
         setTask(dbVal.docs.map((doc)=>({...doc.data(), id: doc.id})))
-        console.log(task);
       };
       const handleEdit=(id, titles, desc)=>{
         setTitle(titles)
@@ -35,7 +35,7 @@ const Task = () => {
         await deleteDoc(doc(db, "todo", id));
     }
   return (
-    <div className="flex gap-2 flex-col ">
+    <div className="ml-[24%] grid grid-cols-3 grid-flow-row w-screen items-center ">
         {show?<section className="bg-white dark:bg-gray-900">
       <div className="py-8 px-4 mx-auto max-w-2xl lg:py-16">
         <h2 className="mb-4 text-xl font-bold text-gray-900 dark:text-white">
@@ -89,12 +89,13 @@ const Task = () => {
           </button>
         </form>
       </div>
-    </section>:null}
-      {task.map((item, i) => {
+    </section>:
+     <div>
+       {task.map((item, i) => {
         return (
           <div
             key={i}
-            className="flex flex-col justify-between items-center border-2 gap-1 p-2 hover:bg-slate-50 bg-slate-200"
+            className="flex flex-col justify-between m-4 items-center border-2 gap-1 p-2 hover:bg-slate-50 bg-slate-200"
           >
             <h2>Title: {item.title}</h2>
             <h3>Work Update: {item.description}</h3>
@@ -116,6 +117,7 @@ const Task = () => {
           </div>
         );
       })}
+     </div>}
     </div>
   );
 };
