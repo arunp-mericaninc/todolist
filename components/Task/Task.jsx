@@ -5,6 +5,7 @@ import { TiDeleteOutline } from "react-icons/ti";
 import { doc, deleteDoc, getDocs, collection, updateDoc } from "firebase/firestore";
 import { getFirestore } from "firebase/firestore";
 import { app } from "@/utils/firebase";
+import withAuth from "../Producted/ProductedRoute";
 
 const Task = () => {
     const db = getFirestore(app);
@@ -122,4 +123,4 @@ const Task = () => {
   );
 };
 
-export default Task;
+export default withAuth (Task);
