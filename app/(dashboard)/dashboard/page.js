@@ -6,11 +6,11 @@ import { useRouter } from 'next/navigation'
 import React, { useContext } from 'react'
 
 const page = () => {
-  const {user}= useContext(UserContext)
+  const {User}= useContext(UserContext)
   const router = useRouter()
   return (
     <div className=''>
-      {user?<SideBar/>:router.push("/")}
+      {User?<SideBar/>:router.push("/")}
       <Task/>
     </div>
   )

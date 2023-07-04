@@ -21,7 +21,7 @@ const page = () => {
   const auth = getAuth(app);
   const [post, setPost] = useState([]);
   const [userPost, setUserPost] = useState([]);
-  const { user } = useContext(UserContext);
+  const { User } = useContext(UserContext);
   const router = useRouter();
   const db = getFirestore(app);
 
@@ -36,15 +36,15 @@ const page = () => {
       setPost(dbVal.docs.map((doc) => ({ ...doc.data(), id: doc.id })));
     };
     getData();
-  }, [user]);
+  }, [User]);
 
   useEffect(() => {
     getUserPost();
-  }, [user]);
+  }, [User]);
 
   const getUserPost = async () => {
     setUserPost([]);
-    if (user.email) {
+    if (User.email) {
       const q = query(collection(db, "post"), where("email", "==", user.email));
       const querySnapshot = await getDocs(q);
       querySnapshot.forEach((doc) => {
@@ -71,7 +71,7 @@ const page = () => {
         <SideBar/>
       <div class="ml-[14%] sm:ml-64">
         <div>
-          {user?
+          {User?
           <div className="flex items-center justify-center h-screen">
             {val.map((item, index) => {
               return (

@@ -8,7 +8,7 @@ export const UserContext = createContext(null);
 
 export const UserContextProvider = ({children}) =>{
     const auth = getAuth(app);
-    const [user, setUser] = useState({});
+    const [User, setUser] = useState({});
     useEffect(() => {
         const unsubscribe = onAuthStateChanged(auth, (currentuser) => {
           // console.log("Auth", currentuser);
@@ -22,7 +22,7 @@ export const UserContextProvider = ({children}) =>{
       }, []);
 
     const value = {
-        user
+        User
     }
 
     return(
