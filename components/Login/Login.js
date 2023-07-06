@@ -34,7 +34,7 @@ const Login = () => {
       "Log in Success!",
       "success",
     )
-    router.push("/profile")
+    router.push("/dashboard")
     console.log(user);
     // ...
   })
@@ -100,7 +100,7 @@ const Login = () => {
                 Sign in
               </button>
               <p className="text-sm font-light text-gray-500 dark:text-gray-400">
-                Don’t have an account yet?{" "}
+                Don’t have an account yet?
                 <span
                   onClick={() => router.push("/signUp")}
                   className="font-medium text-primary-600 hover:underline dark:text-primary-500"

@@ -20,33 +20,18 @@ import withAuth from "@/components/Producted/ProductedRoute";
 const Profile = () => {
   const [val, setVal] = useState([]);
   const auth = getAuth(app);
-  const [post, setPost] = useState([]);
-  const [userPost, setUserPost] = useState([]);
   const { User } = useContext(UserContext);
   const router = useRouter();
   const db = getFirestore(app);
 
-  const value = collection(db, "post");
-
-  console.log(post);
   console.log(val);
 
   useEffect(() => {
-    const getData = async () => {
-      const dbVal = await getDocs(value);
-      setPost(dbVal.docs.map((doc) => ({ ...doc.data(), id: doc.id })));
-    };
-    getData();
-  }, [User]);
-
-  useEffect(() => {
-    if (User!==null) {
-      getUserPost();
-    }
-  }, [User]);
+    getUserPost();
+}, []);
+ 
 
   const getUserPost = async () => {
-    setUserPost([]);
     if (User.email) {
       const q = query(collection(db, "post"), where("email", "==", User.email));
       const querySnapshot = await getDocs(q);
@@ -73,7 +58,7 @@ const Profile = () => {
   return (
     <div>
         <SideBar/>
-      <div class="ml-[14%] sm:ml-64">
+      <div className="ml-[14%] sm:ml-64">
         <div>
           
           <div className="flex items-center justify-center h-screen">
@@ -136,9 +121,9 @@ const Profile = () => {
               );
             })}
           </div>
-          <div className="flex flex-wrap">
+          {/* <div className="flex flex-wrap">
           <Task/>
-        </div>
+        </div> */}
         </div>
       </div>
     </div>

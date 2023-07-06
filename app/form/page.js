@@ -5,6 +5,7 @@ import { getDownloadURL, getStorage, ref, uploadBytes } from "firebase/storage";
 import { app } from '@/utils/firebase';
 import { useRouter } from 'next/navigation';
 import Swal from 'sweetalert2';
+import withAuth from '@/components/Producted/ProductedRoute';
 
 
 const Form = () => {
@@ -219,4 +220,4 @@ const Form = () => {
   )
 }
 
-export default Form
+export default withAuth (Form)
