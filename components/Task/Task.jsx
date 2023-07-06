@@ -21,8 +21,8 @@ const Task = () => {
   const [show, setShow] = useState(false);
   const { User } = useContext(UserContext);
 
-  console.log(todos);
-
+  // console.log(todos);
+//for the useEffect function to get data
   const fetchData = async () => {
     if(query(collection(db, "todo")!==null)){
     const q = query(collection(db, "todo")
@@ -40,24 +40,30 @@ const Task = () => {
   useEffect(() => {
     fetchData();
   }, []);
-
+//Edit from todo
   const handleEditTodo = ( id, title, description ) => {
       setTitle(title);
       setDescription(description);
       setId(id);
       setShow(true);
+  
   };
+
+  //update the value in firebase
   const handleSubmit = async (e) => {
     e.preventDefault()
     const updateData = doc(db, "todo", id);
     await updateDoc(updateData, { title: title, description: description });
     setShow(false)
-    
+    setTodos([])
+    fetchData()
   };
+
+  //Delete From Firebase
   const handleDeleteTodo = async (id) => {
     await deleteDoc(doc(db, "todo", id));
-    
- 
+    setTodos([])
+    fetchData()
   };
   return (
     <div className="ml-[24%] grid grid-cols-3 grid-flow-row w-screen items-center ">
