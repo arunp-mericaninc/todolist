@@ -27,7 +27,7 @@ const Task = () => {
   const fetchData = async () => {
     if(query(collection(db, "todo")!==null)){
     const q = query(collection(db, "todo")
-    , where("email", "==", User.email));
+    , where("uid", "==", User.uid));
     const querySnapshot = await getDocs(q);
     querySnapshot.forEach((doc) => {
       let data = doc.data();

@@ -6,7 +6,7 @@ import { app } from '@/utils/firebase';
 import { useRouter } from 'next/navigation';
 import Swal from 'sweetalert2';
 import withAuth from '@/components/Producted/ProductedRoute';
-
+import { v4 as uuidv4 } from "uuid";
 
 const Form = () => {
   const [inputs, setInputs]= useState([]);
@@ -15,6 +15,8 @@ const Form = () => {
   const storage = getStorage(app);
   const db = getFirestore(app);
   const router = useRouter();
+  let uniqueid= uuidv4()
+  console.log(uniqueid);
   useEffect(()=>{
     if(submit==true)
     {
@@ -31,7 +33,7 @@ const Form = () => {
     if (e && e.preventDefault) {
       e.preventDefault();
     }
-    console.log(inputs);
+    
     const storageRef = ref(storage, 'todolist/'+file?.name);
     uploadBytes(storageRef, file).then((snapshot) => {
         console.log('Uploaded a blob or file!');
@@ -39,13 +41,14 @@ const Form = () => {
         getDownloadURL(storageRef).then(async(url)=>{
             
             setInputs((values)=>({...values,
+              uid:uniqueid,
                 image:url}));          
             setSubmit(true);
 
         }) 
       }) ;
   };
-
+  console.log(inputs);
   const savePost=async()=>{
     await setDoc(doc(db, "post", Date.now().toString()), inputs);
     Swal.fire(

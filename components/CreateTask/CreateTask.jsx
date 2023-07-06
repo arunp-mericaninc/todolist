@@ -18,7 +18,9 @@ const CreateTask = () => {
     const [show, setShow] = useState(false);
   const [inputs, setInputs]= useState([]);
 //   const [submit, setSubmit] = useState(false);
+
   const storage = getStorage(app);
+  console.log(User.uid);
 
 //   useEffect(()=>{
 //     if(submit==true)
@@ -30,7 +32,7 @@ const CreateTask = () => {
   const handleChange = (e)=>{
     const name = e.target.name;
     const value = e.target.value;
-    setInputs((values)=>({...values,[name]:value, email:User.email}))
+    setInputs((values)=>({...values,[name]:value, uid:User.uid}))
   }
   // const handleSubmit=async(e)=>{
   //   // e.preventDefault()
