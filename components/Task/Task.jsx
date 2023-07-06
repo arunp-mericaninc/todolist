@@ -22,6 +22,7 @@ const Task = () => {
   const { User } = useContext(UserContext);
 
   // console.log(todos);
+  console.log(User.email);
 //for the useEffect function to get data
   const fetchData = async () => {
     if(query(collection(db, "todo")!==null)){
