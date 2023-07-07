@@ -24,8 +24,8 @@ const Profile = () => {
   const router = useRouter();
   const db = getFirestore(app);
 
-  console.log(val);
-  console.log(User.uid);
+  // console.log(val);
+  // console.log(User.uid);
 
   useEffect(() => {
     getUserPost();

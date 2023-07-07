@@ -38,7 +38,7 @@ const Form = () => {
     
     const storageRef = ref(storage, 'todolist/'+file?.name);
     uploadBytes(storageRef, file).then((snapshot) => {
-        console.log('Uploaded a blob or file!');
+        // console.log('Uploaded a blob or file!');
       }).then(resp=>{
         getDownloadURL(storageRef).then(async(url)=>{
             
@@ -50,7 +50,7 @@ const Form = () => {
         }) 
       }) ;
   };
-  console.log(inputs);
+  // console.log(inputs);
   const savePost=async()=>{
     await setDoc(doc(db, "post", Date.now().toString()), inputs);
     Swal.fire(
