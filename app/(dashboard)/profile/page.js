@@ -25,6 +25,7 @@ const Profile = () => {
   const db = getFirestore(app);
 
   console.log(val);
+  console.log(User.uid);
 
   useEffect(() => {
     getUserPost();
@@ -32,8 +33,8 @@ const Profile = () => {
  
 
   const getUserPost = async () => {
-    if (User.email) {
-      const q = query(collection(db, "post"), where("email", "==", User.email));
+    if (User!==null) {
+      const q = query(collection(db, "post"), where("uid", "==", User.uid));
       const querySnapshot = await getDocs(q);
       querySnapshot.forEach((doc) => {
         let data = doc.data();
@@ -102,7 +103,7 @@ const Profile = () => {
                     <span className="text-sm text-gray-500 dark:text-gray-400">
                       Email: {item.email}
                     </span>
-                    <p>Contact No :{item.ohoneno}</p>
+                    <p>Contact No :{item.phoneno}</p>
                     <div className="flex mt-4 space-x-3 md:mt-6">
                       <button
                         onClick={() => router.push("/task")}
