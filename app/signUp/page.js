@@ -1,3 +1,4 @@
+import withAuth from '@/components/Producted/ProductedRoute'
 import SignUp from '@/components/SignIn/SignUp'
 import React from 'react'
 
@@ -9,4 +10,4 @@ const page = () => {
   )
 }
 
-export default page
+export default withAuth (page)
